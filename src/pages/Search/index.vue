@@ -44,6 +44,7 @@
 
         <!--details-->
         <div class="details clearfix">
+          <!-- nav:综合+价格 -->
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
@@ -74,6 +75,7 @@
               </ul>
             </div>
           </div>
+
           <!-- 商品item -->
           <div class="goods-list">
             <ul class="yui3-g">
@@ -84,9 +86,9 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="item.defaultImg"
-                    /></a>
+                    <router-link :to="`/detail/${item.id}`">
+                      <img :src="item.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -128,7 +130,7 @@
           :pageSize="searchParams.pageSize"
           :total="total"
           :continues="5"
-          @getPageNo(pageno)="getPageNo"
+          @getPageNo="getPageNo"
         />
       </div>
     </div>
@@ -160,9 +162,9 @@ export default {
         //排序:初始状态是"综合:降序"
         order: "1:desc",
         //分页器：代表当前时第几页
-        pageNo: 5,
+        pageNo: 1,
         //每一页展示的数据个数
-        pageSize: 10,
+        pageSize: 5,
         //平台售卖属性操作带的参数
         props: [],
         //品牌
@@ -283,8 +285,10 @@ export default {
       this.getData();
     },
     //自定义事件:获取当前第几页
-    getPageNo(pageNo) {
-      console.log(pageNo);
+    getPageNo(i) {
+      //整理点击分页器带给服务器的参数
+      this.searchParams.pageNo = i;
+      this.getData();
     },
   },
   watch: {

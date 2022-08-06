@@ -16,21 +16,45 @@
         <div class="sort" v-show="showsort">
           <!-- 利用事件的委派和编程式导航实现路由的跳转与传递参数,存在一些问题 -->
           <div class="all-sort-list2" @click="goSearch">
-            <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
-              <h3 @mouseenter="enterIndex(index)" :class="{ current: currentIndex == index }">
-                <a :data-categoryName='c1.categoryName' :data-category1Id='c1.categoryId'>{{ c1.categoryName }}</a>
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.categoryId"
+            >
+              <h3
+                @mouseenter="enterIndex(index)"
+                :class="{ current: currentIndex == index }"
+              >
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                  >{{ c1.categoryName }}</a
+                >
               </h3>
               <div class="item-list clearfix">
                 <div class="subitem">
-                  <dl class="fore" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
+                  <dl
+                    class="fore"
+                    v-for="(c2, index) in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
                     <dt>
-                      <a :data-categoryName='c2.categoryName' :data-category2Id='c2.categoryId'>{{ c2.categoryName
-                      }}</a>
+                      <a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                        >{{ c2.categoryName }}</a
+                      >
                     </dt>
                     <dd>
-                      <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
-                        <a :data-categoryName='c3.categoryName' :data-category3Id='c3.categoryId'>{{ c3.categoryName
-                        }}</a>
+                      <em
+                        v-for="(c3, index) in c2.categoryChild"
+                        :key="c3.categoryId"
+                      >
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                          >{{ c3.categoryName }}</a
+                        >
                       </em>
                     </dd>
                   </dl>
@@ -45,21 +69,21 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import throttle from 'lodash/throttle'
+import { mapState } from "vuex";
+import throttle from "lodash/throttle";
 export default {
-  name: 'TypeNav',
+  name: "TypeNav",
   data() {
     return {
       //存储用户鼠标移到哪一个一级分类
       currentIndex: -1, //! 不能是0-15
-      showsort: true
-    }
+      showsort: true,
+    };
   },
   mounted() {
     //组件挂载完毕showsort变为false
-    if (this.$route.path != '/home') {
-      this.showsort = false
+    if (this.$route.path != "/home") {
+      this.showsort = false;
     }
   },
   computed: {
@@ -68,10 +92,9 @@ export default {
       //注入一个state，为大仓库中的数据
       categoryList: (state) => {
         // console.log(state)
-        return state.home.categoryList.slice(0, 16)
-      }
-
-    })
+        return state.home.categoryList.slice(0, 16);
+      },
+    }),
   },
   methods: {
     //鼠标悬浮一级分类修改currentIndex
@@ -82,35 +105,35 @@ export default {
     //throttle回调函数别用箭头函数，可能会出现上下文this
     //这里加的节流有bug，鼠标快速移动蓝色会停留
     enterIndex: throttle(function (index) {
-      this.currentIndex = index
+      this.currentIndex = index;
       // console.log('鼠标进入' + index)
     }, 50),
     //鼠标悬浮一级分类修改currentIndex
     leaveShowsort() {
-      this.currentIndex = -1
-      if ((this.$route.path).indexOf('search') != -1) {
-        this.showsort = false
+      this.currentIndex = -1;
+      if (this.$route.path != "/home") {
+        this.showsort = false;
       }
-
     },
     goSearch(event) {
       //获取出发点击事件的节点
-      let element = event.target
+      let element = event.target;
       // console.log(element);
       //获取节点的自定义属性和值
-      let { categoryname, category1id, category2id, category3id } = element.dataset
+      let { categoryname, category1id, category2id, category3id } =
+        element.dataset;
       //有categoryname为a标签
       if (categoryname) {
         //整理路由跳转的参数
-        let location = { name: 'search' }
-        let query = { categoryName: categoryname }
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
         //区分各级分类
         if (category1id) {
-          query.category1Id = category1id
+          query.category1Id = category1id;
         } else if (category2id) {
-          query.category2Id = category2id
+          query.category2Id = category2id;
         } else if (category3id) {
-          query.category3Id = category3id
+          query.category3Id = category3id;
         }
         //整理完参数
         // console.log(location, query);
@@ -122,17 +145,17 @@ export default {
         */
         /*现:跳转时加上param参数*/
         if (this.$route.params) {
-          location.params = this.$route.params
-          location.query = query
-          this.$router.push(location)
+          location.params = this.$route.params;
+          location.query = query;
+          this.$router.push(location);
         }
       }
     },
     enterShowsort() {
-      this.showsort = true
-    }
-  }
-}
+      this.showsort = true;
+    },
+  },
+};
 </script>
 
 <style scoped lang="less">

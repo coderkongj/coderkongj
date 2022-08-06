@@ -1,24 +1,47 @@
 <template>
   <div class="pagination">
+    <!-- 分页器前部分 -->
     <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">
       上一页
     </button>
-    <button v-if="seriesNum.startNum > 1">1</button>
-
+    <button
+      v-if="seriesNum.startNum > 1"
+      @click="$emit('getPageNo', 1)"
+      :class="{ active: pageNo == 1 }"
+    >
+      1
+    </button>
     <button v-if="seriesNum.startNum > 2">···</button>
+
     <!-- 分页器中间部分 -->
-    <div v-for="(page, index) in seriesNum.endNum" :key="index">
-      <button v-if="page >= seriesNum.startNum">
-        {{ page }}
-      </button>
-    </div>
+    <button
+      v-for="(page, index) in seriesNum.endNum"
+      :key="index"
+      v-show="page >= seriesNum.startNum"
+      @click="$emit('getPageNo', page)"
+      :class="{ active: pageNo == page }"
+    >
+      {{ page }}
+    </button>
 
-    <button v-if="seriesNum.endNum + 1 < totalPages">···</button>
-    <button v-if="seriesNum.endNum < totalPages">{{ totalPages }}</button>
-    <button>下一页</button>
+    <!-- 分页器后部分 -->
+    <button v-if="seriesNum.endNum < totalPages - 1">···</button>
+    <button
+      v-if="seriesNum.endNum < totalPages"
+      @click="$emit('getPageNo', totalPages)"
+      :class="{ active: pageNo == totalPages }"
+    >
+      {{ totalPages }}
+    </button>
+    <button
+      :disabled="pageNo == totalPages"
+      @click="$emit('getPageNo', pageNo + 1)"
+    >
+      下一页
+    </button>
 
-    <button style="margin-left: 30px">共 {{ total }} 条</button>
-    {{ seriesNum }}---当前{{ pageNo }}---共{{ totalPages }}
+    <!-- <button style="margin-left: 30px">共 {{ totalPages }} 页</button> -->
+    <span style="margin-left: 30px">共 {{ totalPages }} 页</span>
   </div>
 </template>
 
@@ -32,8 +55,9 @@ export default {
       //向上取整
       return Math.ceil(this.total / this.pageSize);
     },
-    //计算出连续的页码的起始数字与结束数字
+    //⭐计算出连续的页码的起始数字与结束数字
     seriesNum() {
+      //解构出连续页码数，当前页码，总页数
       const { continues, pageNo, totalPages } = this;
       let startNum = 0;
       let endNum = 0;
@@ -45,14 +69,14 @@ export default {
         //正常现象[连续页码数为5（分页器至少有5页数据）]
         startNum = pageNo - parseInt(continues / 2);
         endNum = pageNo + parseInt(continues / 2);
-        //不正常现象:起始页码小于1
+        //纠正不正常现象:起始页码小于1
         if (startNum < 1) {
           startNum = 1;
-          endNum = 5;
+          endNum = continues;
         }
-        //不正常现象:末尾页码大于totalPages
+        //纠正不正常现象:末尾页码大于totalPages
         if (endNum > totalPages) {
-          startNum = endNum - continues;
+          startNum = totalPages - continues + 1;
           endNum = totalPages;
         }
       }
@@ -63,6 +87,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+span {
+  line-height: 28px;
+  font-size: 14px;
+}
 .pagination {
   text-align: center;
   button {
@@ -90,7 +118,7 @@ export default {
 
     &.active {
       cursor: not-allowed;
-      background-color: #409eff;
+      background-color: #e1251b;
       color: #fff;
     }
   }

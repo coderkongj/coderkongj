@@ -9,7 +9,7 @@ const state = {
 }
 
 const mutations = {
-  CATEGORYLISR(state, categoryList) {
+  CATEGORYLIST(state, categoryList) {
     state.categoryList = categoryList
   },
   BANNERLIST(state, bannerList) {
@@ -26,7 +26,7 @@ const actions = {
     let result = await reqCategoryList()
     // console.log(result)
     if (result.code == 200) {
-      commit('CATEGORYLISR', result.data)
+      commit('CATEGORYLIST', result.data)
     }
   },
   //获取轮播图数据

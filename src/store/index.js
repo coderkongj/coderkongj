@@ -23,14 +23,18 @@ Vue.use(Vuex)
 //vuex模块式开发，建小仓库
 //引入小仓库
 import search from './search/index'
-import home from './home'
+import home from './home/index'
+import detail from './detail/index'
+import shopcart from './shopcart/index'
 
 //对外暴露Store类的一个实例
 export default new Vuex.Store({
   //实现vuex仓库模块式开发存储数据
   modules: {
     home,
-    search
+    search,
+    detail,
+    shopcart
   }
 })
 
