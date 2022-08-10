@@ -5,8 +5,12 @@
         <div class="center">
           <div class="swiper-container" id="floor1Swiper" ref="mySwiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="(item, index) in fuckBanner" :key="item.id">
-                <img :src="item.imgUrl">
+              <div
+                class="swiper-slide"
+                v-for="(item, index) in fuckBanner"
+                :key="item.id"
+              >
+                <img :src="item.imgUrl" />
               </div>
             </div>
             <!-- 如果需要分页器 -->
@@ -24,69 +28,59 @@
             </h4>
             <div class="clearix"></div>
             <ul class="news-list unstyled">
-              <li>
-                <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-              </li>
-              <li>
-                <span class="bold">[公告]</span>备战开学季 全民半价购数码
-              </li>
-              <li>
-                <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-              </li>
-              <li>
-                <span class="bold">[公告]</span>备战开学季 全民半价购数码
-              </li>
-              <li>
-                <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-              </li>
+              <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
+              <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
+              <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
+              <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
+              <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
             </ul>
           </div>
           <ul class="lifeservices">
-            <li class=" life-item ">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">话费</span>
             </li>
-            <li class=" life-item ">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">机票</span>
             </li>
-            <li class=" life-item ">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">电影票</span>
             </li>
-            <li class=" life-item ">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">游戏</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">彩票</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">加油站</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">酒店</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">火车票</span>
             </li>
-            <li class=" life-item ">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">众筹</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">理财</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">礼品卡</span>
             </li>
-            <li class=" life-item">
+            <li class="life-item">
               <i class="list-item"></i>
               <span class="service-intro">白条</span>
             </li>
@@ -101,9 +95,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
-import Swiper from "swiper"
-import "swiper/css/swiper.min.css"
+import { mapState } from "vuex";
+import Swiper from "swiper";
+import "swiper/css/swiper.min.css";
 export default {
   name: "ListContainer",
   mounted() {
@@ -112,8 +106,8 @@ export default {
   },
   computed: {
     ...mapState({
-      fuckBanner: state => state.home.bannerList
-    })
+      fuckBanner: (state) => state.home.bannerList,
+    }),
   },
   watch: {
     fuckBanner: {
@@ -125,21 +119,21 @@ export default {
             loop: true, // 循环模式选项
             // 如果需要分页器
             pagination: {
-              el: '.swiper-pagination',
+              el: ".swiper-pagination",
               //点击小球切换图片
-              clickable: true
+              clickable: true,
             },
             // 如果需要前进后退按钮
             navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
             },
-          })
-        })
-      }
-    }
-  }
-}
+          });
+        });
+      },
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -213,7 +207,7 @@ export default {
           width: 25%;
 
           .list-item {
-            background-image: url(./images/icons.png);
+            background-image: url(~@/assets/icons.png);
             width: 61px;
             height: 40px;
             display: block;

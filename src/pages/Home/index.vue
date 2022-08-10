@@ -30,6 +30,8 @@ export default {
   components: { TypeNav, ListContainer, Recommend, Rank, Like, Floor, Brand },
   mounted() {
     this.$store.dispatch("floorList");
+    // getUserInfo转移到路由守卫了
+    // this.$store.dispatch("getUserInfo");
   },
   computed: {
     ...mapState({

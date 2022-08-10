@@ -13,17 +13,24 @@ const requests = axios.create({
   baseURL: 'http://gmall-h5-api.atguigu.cn/api',
   timeout: 6000
 })
+
 // 请求拦截器：发送请求之前
 requests.interceptors.request.use((config) => {
-  //config:配置对象，对象里面有一个属性很重要，header请求头
+  // config:配置对象，对象里面有一个属性很重要，header请求头
+  // 请求头添加uuid
   if (store.state.detail.uuid_token) {
-    // 请求头添加一个字段（userTempId），和后台商量好的
+    // 添加字段userTempId，和后台商量好的，不能瞎写
     config.headers.userTempId = store.state.detail.uuid_token
   }
-  //进度条开始动
+  // 请求头添加token
+  if (store.state.user.token) {
+    config.headers.token = store.state.user.token
+  }
+  // 进度条开始动
   nprogress.start()
   return config
 })
+
 // 响应拦截器
 requests.interceptors.response.use((res) => {
   // 成功的回调：服务器响应数据回来以后,响应拦截器可以检测到
